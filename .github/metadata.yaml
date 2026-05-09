@@ -1,0 +1,9 @@
+# .github/metadata.yaml
+description: "The Pair binary cartesian product type for typed two-component values in Swift."
+topics:
+  - primitives
+  - product-type
+  - data-structures
+  - type-safety
+  - ownership
+homepage: "https://swift-institute.org"
