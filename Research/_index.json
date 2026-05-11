@@ -54,6 +54,17 @@
       "statusRaw": "DECISION",
       "tier": 1,
       "scope": "per-package"
+    },
+    {
+      "file": "future-directions.md",
+      "displayName": "future-directions.md",
+      "topic": "Forward directions: 14 candidates analyzed across category-theory totality (assocL/assocR, distributivity, sequence/traverse, bifold, bizip, These, Tagged-Pair, n-ary Product bridge) and Swift Evolution forward-pass (SE-0470/0494/0499/0503/0507/0518/0530, BitwiseCopyable, InlineArray/Span interop). Verdicts: 5 ADOPT (assocL/assocR, sequence over Optional/Result/Either, SE-0499 cleanup, BitwiseCopyable, InlineArray interop tests), 6 DEFER, 8 REJECT, 1 DONE. Top 3: A4 sequence, A1 assocL/assocR, B5+B6 BitwiseCopyable + InlineArray. Cross-package implications: A2 distributivity and A4 Either variant share a Pair↔Either bridge-package decision needing user input.",
+      "date": "2026-05-10",
+      "status": "RECOMMENDATION",
+      "statusDetail": null,
+      "statusRaw": "RECOMMENDATION",
+      "tier": 2,
+      "scope": "cross-package"
     }
   ]
 }
