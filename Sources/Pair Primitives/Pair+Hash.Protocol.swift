@@ -9,6 +9,7 @@
 // Hashable, Second: Hashable {}` in `Pair.swift` is therefore guarded
 // `#if swift(<6.4)` to avoid duplicate-conformance.
 
+#if swift(<6.4)
 extension Pair: Hash.`Protocol`
 where
     First: Hash.`Protocol` & ~Copyable & ~Escapable,
@@ -22,3 +23,21 @@ where
         second.hash(into: &hasher)
     }
 }
+#else
+// Under Swift 6.4+, `Hash.Protocol` is a typealias to `Swift.Hashable`
+// (SE-0499). Stdlib `Hashable` requires `Escapable`, so the
+// `~Escapable` arm of the 6.3 conformance is not expressible here.
+extension Pair: Hash.`Protocol`
+where
+    First: Hash.`Protocol` & ~Copyable,
+    Second: Hash.`Protocol` & ~Copyable
+{
+    /// Hashes both components into the given hasher in order.
+    @inlinable
+    @_disfavoredOverload
+    public borrowing func hash(into hasher: inout Hasher) {
+        first.hash(into: &hasher)
+        second.hash(into: &hasher)
+    }
+}
+#endif

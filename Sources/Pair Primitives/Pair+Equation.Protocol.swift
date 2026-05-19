@@ -9,6 +9,7 @@
 // Equatable where First: Equatable, Second: Equatable {}` in `Pair.swift`
 // is therefore guarded `#if swift(<6.4)` to avoid duplicate-conformance.
 
+#if swift(<6.4)
 extension Pair: Equation.`Protocol`
 where
     First: Equation.`Protocol` & ~Copyable & ~Escapable,
@@ -21,3 +22,19 @@ where
         lhs.first == rhs.first && lhs.second == rhs.second
     }
 }
+#else
+// Swift 6.4+: Equation.Protocol = Swift.Equatable. Stdlib Equatable
+// requires Escapable, so drop the ~Escapable arm.
+extension Pair: Equation.`Protocol`
+where
+    First: Equation.`Protocol` & ~Copyable,
+    Second: Equation.`Protocol` & ~Copyable
+{
+    /// Returns whether two pairs are equal componentwise.
+    @inlinable
+    @_disfavoredOverload
+    public static func == (lhs: borrowing Pair, rhs: borrowing Pair) -> Bool {
+        lhs.first == rhs.first && lhs.second == rhs.second
+    }
+}
+#endif
