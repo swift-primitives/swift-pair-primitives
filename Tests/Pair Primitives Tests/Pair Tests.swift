@@ -61,6 +61,8 @@ extension Span: Comparison.`Protocol` {
 struct `Pair Tests` {
     @Suite struct Unit {}
     @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
+    @Suite(.serialized) struct Performance {}
 }
 
 // MARK: - Unit: ~Copyable Tier (Static + Consuming)
@@ -399,7 +401,7 @@ extension `Pair Tests`.`Edge Case` {
     func `map second with throwing transform propagates error`() {
         struct Fail: Swift.Error, Equatable {}
         let pair = Pair(1, 2)
-        do {
+        do throws(Fail) {
             _ = try pair.map(second: { _ throws(Fail) -> Int in throw Fail() })
             Issue.record("Expected Fail to be thrown")
         } catch {
@@ -411,7 +413,7 @@ extension `Pair Tests`.`Edge Case` {
     func `map first and second with throwing transform propagates error`() {
         struct Fail: Swift.Error, Equatable {}
         let pair = Pair(1, 2)
-        do {
+        do throws(Fail) {
             _ = try pair.map(
                 first: { (x: Int) throws(Fail) -> Int in x },
                 second: { _ throws(Fail) -> Int in throw Fail() }

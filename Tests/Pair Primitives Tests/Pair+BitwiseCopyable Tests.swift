@@ -13,13 +13,20 @@ private func requiresBitwiseCopyable<T: BitwiseCopyable>(_: T.Type) {}
 
 @Suite
 struct `Pair BitwiseCopyable Tests` {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
+    @Suite(.serialized) struct Performance {}
+}
+
+extension `Pair BitwiseCopyable Tests`.Unit {
     @Suite struct Layout {}
     @Suite struct Conformance {}
 }
 
 // MARK: - Layout
 
-extension `Pair BitwiseCopyable Tests`.Layout {
+extension `Pair BitwiseCopyable Tests`.Unit.Layout {
 
     @Test
     func `Pair of two Ints has same size as tuple of two Ints`() {
@@ -46,7 +53,7 @@ extension `Pair BitwiseCopyable Tests`.Layout {
 
 // MARK: - Conformance
 
-extension `Pair BitwiseCopyable Tests`.Conformance {
+extension `Pair BitwiseCopyable Tests`.Unit.Conformance {
 
     @Test
     func `Pair of BitwiseCopyable arms conforms to BitwiseCopyable`() {
