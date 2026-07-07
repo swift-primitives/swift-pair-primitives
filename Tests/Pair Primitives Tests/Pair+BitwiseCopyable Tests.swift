@@ -6,6 +6,7 @@ import Testing
 // MARK: - Static Verifier
 
 /// Compile-time witness: requires that `T` conforms to `BitwiseCopyable`.
+///
 /// If the call site compiles, the conformance is statically established.
 private func requiresBitwiseCopyable<T: BitwiseCopyable>(_: T.Type) {}
 
