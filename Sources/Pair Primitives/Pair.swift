@@ -24,7 +24,9 @@
 /// let velocity: Pair<Vertical, Double> = Pair(.upward, 9.8)
 /// ```
 @frozen
-public struct Pair<First: ~Copyable & ~Escapable, Second: ~Copyable & ~Escapable>: ~Copyable, ~Escapable {
+public struct Pair<First: ~Copyable & ~Escapable, Second: ~Copyable & ~Escapable>: ~Copyable,
+    ~Escapable
+{
     /// First component.
     public var first: First
 
