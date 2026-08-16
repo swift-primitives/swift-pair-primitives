@@ -309,51 +309,57 @@ extension `Pair Tests`.Unit {
 
 // MARK: - Unit: Equation.Protocol / Hash.Protocol / Comparison.Protocol on ~Copyable & ~Escapable Pair
 
-extension `Pair Tests`.Unit {
+// The ~Escapable arm of these conformances only exists below Swift 6.4. From 6.4 on,
+// `Equation.Protocol`, `Hash.Protocol` and `Comparison.Protocol` are the stdlib
+// protocols, which require `Escapable`, so `Pair` no longer conforms for a
+// ~Escapable component and these expectations cannot be written.
+#if swift(<6.4)
+    extension `Pair Tests`.Unit {
 
-    @Test
-    func `equation protocol noncopyable nonescapable pair equality`() {
-        let a = Pair(Span(value: 1), Span(value: 2))
-        let b = Pair(Span(value: 1), Span(value: 2))
-        let result: Bool = a == b
-        #expect(result)
-    }
+        @Test
+        func `equation protocol noncopyable nonescapable pair equality`() {
+            let a = Pair(Span(value: 1), Span(value: 2))
+            let b = Pair(Span(value: 1), Span(value: 2))
+            let result: Bool = a == b
+            #expect(result)
+        }
 
-    @Test
-    func `equation protocol noncopyable nonescapable pair inequality`() {
-        let a = Pair(Span(value: 1), Span(value: 2))
-        let c = Pair(Span(value: 1), Span(value: 3))
-        let result: Bool = a != c
-        #expect(result)
-    }
+        @Test
+        func `equation protocol noncopyable nonescapable pair inequality`() {
+            let a = Pair(Span(value: 1), Span(value: 2))
+            let c = Pair(Span(value: 1), Span(value: 3))
+            let result: Bool = a != c
+            #expect(result)
+        }
 
-    @Test
-    func `hash protocol noncopyable nonescapable pair hashes`() {
-        let a = Pair(Span(value: 7), Span(value: 8))
-        let b = Pair(Span(value: 7), Span(value: 8))
-        var ha = Hasher()
-        var hb = Hasher()
-        a.hash(into: &ha)
-        b.hash(into: &hb)
-        #expect(ha.finalize() == hb.finalize())
-    }
+        @Test
+        func `hash protocol noncopyable nonescapable pair hashes`() {
+            let a = Pair(Span(value: 7), Span(value: 8))
+            let b = Pair(Span(value: 7), Span(value: 8))
+            var ha = Hasher()
+            var hb = Hasher()
+            a.hash(into: &ha)
+            b.hash(into: &hb)
+            #expect(ha.finalize() == hb.finalize())
+        }
 
-    @Test
-    func `comparison protocol noncopyable nonescapable pair lexicographic`() {
-        let a = Pair(Span(value: 1), Span(value: 100))
-        let b = Pair(Span(value: 2), Span(value: 0))
-        let result: Bool = a < b
-        #expect(result)
-    }
+        @Test
+        func `comparison protocol noncopyable nonescapable pair lexicographic`() {
+            let a = Pair(Span(value: 1), Span(value: 100))
+            let b = Pair(Span(value: 2), Span(value: 0))
+            let result: Bool = a < b
+            #expect(result)
+        }
 
-    @Test
-    func `comparison protocol noncopyable nonescapable pair tie break`() {
-        let a = Pair(Span(value: 1), Span(value: 5))
-        let b = Pair(Span(value: 1), Span(value: 7))
-        let result: Bool = a < b
-        #expect(result)
+        @Test
+        func `comparison protocol noncopyable nonescapable pair tie break`() {
+            let a = Pair(Span(value: 1), Span(value: 5))
+            let b = Pair(Span(value: 1), Span(value: 7))
+            let result: Bool = a < b
+            #expect(result)
+        }
     }
-}
+#endif
 
 // MARK: - Unit: Sendable
 
