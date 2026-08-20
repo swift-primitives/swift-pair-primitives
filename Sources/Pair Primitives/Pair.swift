@@ -49,30 +49,6 @@ extension Pair: Escapable where First: Escapable & ~Copyable, Second: Escapable 
 extension Pair: Sendable
 where First: Sendable & ~Copyable & ~Escapable, Second: Sendable & ~Copyable & ~Escapable {}
 
-// Institute conformances are unconditional. On Swift 6.4+, each `*.Protocol`
-// is a typealias to its stdlib counterpart per SE-0499, so the institute
-// extension IS the stdlib conformance — declaring an additional stdlib
-// extension would conflict (Swift 6.4-dev: "conflicting conformance ...
-// there cannot be more than one conformance, even with different conditional
-// bounds"). On Swift <6.4, the institute protocol is the borrowing-parameter
-// fork — distinct from stdlib Equatable/Hashable/Comparable — so an
-// additional stdlib extension is needed under `#if swift(<6.4)` for
-// `Pair<Copyable, Copyable>` to satisfy stdlib generic constraints.
-
-#if swift(<6.4)
-    extension Pair: Equatable where First: Equatable, Second: Equatable {}
-    extension Pair: Hashable where First: Hashable, Second: Hashable {}
-    extension Pair: Comparable where First: Comparable, Second: Comparable {
-        /// Lexicographic ordering: compare first components, then second on tie.
-        @inlinable
-        public static func < (lhs: Pair, rhs: Pair) -> Bool {
-            if lhs.first < rhs.first { return true }
-            if rhs.first < lhs.first { return false }
-            return lhs.second < rhs.second
-        }
-    }
-#endif
-
 // Institute conformances (Equation.Protocol / Hash.Protocol / Comparison.Protocol)
 // live in their per-protocol files alongside this one for layout symmetry with
 // Either / Product. See Equation.Protocol+Pair.swift, Hash.Protocol+Pair.swift,
