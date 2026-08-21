@@ -1,9 +1,5 @@
-// Pair Tests.swift
-
 import Pair_Primitives
 import Testing
-
-// MARK: - ~Copyable Test Helpers
 
 struct Token: ~Copyable, Sendable {
     let value: Int
@@ -55,8 +51,6 @@ extension Span: Comparison.`Protocol` {
     }
 }
 
-// MARK: - Suite Structure
-
 @Suite
 struct `Pair Tests` {
     @Suite struct Unit {}
@@ -64,8 +58,6 @@ struct `Pair Tests` {
     @Suite struct Integration {}
     @Suite(.serialized) struct Performance {}
 }
-
-// MARK: - Unit: ~Copyable Tier (Static + Consuming)
 
 extension `Pair Tests`.Unit {
 
@@ -147,8 +139,6 @@ extension `Pair Tests`.Unit {
     }
 }
 
-// MARK: - Unit: Copyable Tier (Instance Convenience)
-
 extension `Pair Tests`.Unit {
 
     @Test
@@ -184,8 +174,6 @@ extension `Pair Tests`.Unit {
     }
 }
 
-// MARK: - Unit: Tuple Conversion
-
 extension `Pair Tests`.Unit {
 
     @Test
@@ -203,8 +191,6 @@ extension `Pair Tests`.Unit {
         #expect(tuple.1 == 4)
     }
 }
-
-// MARK: - Unit: Equatable and Hashable
 
 extension `Pair Tests`.Unit {
 
@@ -224,8 +210,6 @@ extension `Pair Tests`.Unit {
         #expect(a.hashValue == b.hashValue)
     }
 }
-
-// MARK: - Unit: Comparable (Lexicographic)
 
 extension `Pair Tests`.Unit {
 
@@ -258,8 +242,6 @@ extension `Pair Tests`.Unit {
         #expect(a > b)
     }
 }
-
-// MARK: - Unit: Equation.Protocol / Hash.Protocol / Comparison.Protocol on ~Copyable Pair
 
 extension `Pair Tests`.Unit {
 
@@ -307,8 +289,6 @@ extension `Pair Tests`.Unit {
     }
 }
 
-// MARK: - Unit: Sendable
-
 extension `Pair Tests`.Unit {
 
     @Test
@@ -325,8 +305,6 @@ extension `Pair Tests`.Unit {
         #expect(result == 141)
     }
 }
-
-// MARK: - Edge Cases
 
 extension `Pair Tests`.`Edge Case` {
 
@@ -376,8 +354,6 @@ extension `Pair Tests`.`Edge Case` {
         }
     }
 
-    // MARK: - ~Escapable arm support
-
     @Test
     func `Pair admits noncopyable nonescapable arms via swapped`() {
         struct View: ~Escapable {
@@ -404,8 +380,6 @@ extension `Pair Tests`.`Edge Case` {
         }
         #expect(sum == 8)
     }
-
-    // MARK: - Mixed-suppression arms (~Copyable & ~Escapable)
 
     @Test
     func `Pair swapped admits noncopyable nonescapable arms`() {

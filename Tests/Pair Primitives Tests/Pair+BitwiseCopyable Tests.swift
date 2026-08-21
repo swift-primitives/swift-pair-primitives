@@ -1,16 +1,7 @@
-// Pair+BitwiseCopyable Tests.swift
-
 import Pair_Primitives
 import Testing
 
-// MARK: - Static Verifier
-
-/// Compile-time witness: requires that `T` conforms to `BitwiseCopyable`.
-///
-/// If the call site compiles, the conformance is statically established.
 private func requiresBitwiseCopyable<T: BitwiseCopyable>(_: T.Type) {}
-
-// MARK: - Suite Structure
 
 @Suite
 struct `Pair BitwiseCopyable Tests` {
@@ -24,8 +15,6 @@ extension `Pair BitwiseCopyable Tests`.Unit {
     @Suite struct Layout {}
     @Suite struct Conformance {}
 }
-
-// MARK: - Layout
 
 extension `Pair BitwiseCopyable Tests`.Unit.Layout {
 
@@ -52,8 +41,6 @@ extension `Pair BitwiseCopyable Tests`.Unit.Layout {
     }
 }
 
-// MARK: - Conformance
-
 extension `Pair BitwiseCopyable Tests`.Unit.Conformance {
 
     @Test
@@ -72,9 +59,7 @@ extension `Pair BitwiseCopyable Tests`.Unit.Conformance {
 
     @Test
     func `InlineArray of Pair preserves element layout`() {
-        // Smoke test: InlineArray requires BitwiseCopyable elements.
-        // If this compiles, the conformance is reachable from generic
-        // contexts that gate on BitwiseCopyable.
+
         let array: InlineArray<3, Pair<Int, Int>> = [
             Pair(1, 2),
             Pair(3, 4),
