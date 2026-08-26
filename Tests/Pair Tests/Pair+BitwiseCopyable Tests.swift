@@ -1,4 +1,4 @@
-import Pair_Primitives
+import Pair
 import Testing
 
 private func requiresBitwiseCopyable<T: BitwiseCopyable>(_: T.Type) {}

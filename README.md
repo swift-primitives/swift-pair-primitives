@@ -1,4 +1,4 @@
-# Pair Primitives
+# Pair
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
@@ -6,7 +6,7 @@
 
 Conditionally `Sendable` / `Equatable` / `Hashable` / `Comparable` / `Codable` based on its components, with overloaded `map(first:)` / `map(second:)` / `map(first:second:)` plus `swapped` / `apply` for compositional transformation. `Comparable` is lexicographic over `(first, second)`. Tuple conversion is available for the `Copyable` tier.
 
-For `~Copyable` components, conformance flows through [`Equation.Protocol`](https://github.com/swift-primitives/swift-equation-primitives) / [`Hash.Protocol`](https://github.com/swift-primitives/swift-hash-primitives) / [`Comparison.Protocol`](https://github.com/swift-primitives/swift-comparison-primitives) — the `borrowing`-parameter forks that admit move-only conformers on Swift 6.3. On Swift 6.4 and later (where SE-0499 lands), each `*.Protocol` is a typealias to its stdlib counterpart, so the same conformances cover both the `~Copyable` and stdlib paths uniformly.
+For `~Copyable` components, conformance flows through [`Equation.Protocol`](https://github.com/swift-molecules/swift-equation) / [`Hash.Protocol`](https://github.com/swift-molecules/swift-hash) / [`Comparison.Protocol`](https://github.com/swift-molecules/swift-comparison) — the `borrowing`-parameter forks that admit move-only conformers on Swift 6.3. On Swift 6.4 and later (where SE-0499 lands), each `*.Protocol` is a typealias to its stdlib counterpart, so the same conformances cover both the `~Copyable` and stdlib paths uniformly.
 
 ---
 
@@ -15,7 +15,7 @@ For `~Copyable` components, conformance flows through [`Equation.Protocol`](http
 `Pair` works with both `Copyable` and `~Copyable` element types:
 
 ```swift
-import Pair_Primitives
+import Pair
 
 let point = Pair(3, 4)
 print(point.first)   // 3
@@ -64,7 +64,7 @@ let widened = labelled.map(
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-primitives/swift-pair-primitives.git", branch: "main")
+    .package(url: "https://github.com/swift-molecules/swift-pair.git", branch: "main")
 ]
 ```
 
@@ -72,7 +72,7 @@ dependencies: [
 .target(
     name: "App",
     dependencies: [
-        .product(name: "Pair Primitives", package: "swift-pair-primitives"),
+        .product(name: "Pair", package: "swift-pair"),
     ]
 )
 ```
@@ -87,12 +87,12 @@ One library product. Three sibling-primitive dependencies for `~Copyable`-aware 
 
 | Product | Target | Contents |
 |---------|--------|----------|
-| `Pair Primitives` | `Sources/Pair Primitives/` | `Pair<First, Second>` (conditionally `~Copyable`) + overloaded `map(first:)` / `map(second:)` / `map(first:second:)` + `swapped` + `apply` + tuple conversion. Conditionally `Equatable` / `Hashable` / `Comparable` / `Codable` (stdlib) and `Equation.Protocol` / `Hash.Protocol` / `Comparison.Protocol` (forks for ~Copyable on Swift 6.3). |
+| `Pair` | `Sources/Pair/` | `Pair<First, Second>` (conditionally `~Copyable`) + overloaded `map(first:)` / `map(second:)` / `map(first:second:)` + `swapped` + `apply` + tuple conversion. Conditionally `Equatable` / `Hashable` / `Comparable` / `Codable` (stdlib) and `Equation.Protocol` / `Hash.Protocol` / `Comparison.Protocol` (forks for ~Copyable on Swift 6.3). |
 
 Dependencies (re-exported via `@_exported public import` so consumers don't need to add them):
-- [`swift-equation-primitives`](https://github.com/swift-primitives/swift-equation-primitives)
-- [`swift-hash-primitives`](https://github.com/swift-primitives/swift-hash-primitives)
-- [`swift-comparison-primitives`](https://github.com/swift-primitives/swift-comparison-primitives)
+- [`swift-equation`](https://github.com/swift-molecules/swift-equation)
+- [`swift-hash`](https://github.com/swift-molecules/swift-hash)
+- [`swift-comparison`](https://github.com/swift-molecules/swift-comparison)
 
 Foundation-free.
 
