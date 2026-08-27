@@ -1,4 +1,5 @@
 import Pair
+import Pair_Standard_Library_Integration
 import Testing
 
 private func requiresBitwiseCopyable<T: BitwiseCopyable>(_: T.Type) {}

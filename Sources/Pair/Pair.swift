@@ -1,7 +1,3 @@
-@_exported public import Comparison
-@_exported public import Equation
-@_exported public import Hash
-
 @frozen
 public struct Pair<First: ~Copyable & ~Escapable, Second: ~Copyable & ~Escapable>: ~Copyable,
     ~Escapable
@@ -23,10 +19,6 @@ extension Pair: Copyable where First: Copyable & ~Escapable, Second: Copyable & 
 extension Pair: Escapable where First: Escapable & ~Copyable, Second: Escapable & ~Copyable {}
 extension Pair: Sendable
 where First: Sendable & ~Copyable & ~Escapable, Second: Sendable & ~Copyable & ~Escapable {}
-
-#if !hasFeature(Embedded)
-    extension Pair: Codable where First: Codable, Second: Codable {}
-#endif
 
 extension Pair where First: ~Copyable, Second: ~Copyable & ~Escapable {
 

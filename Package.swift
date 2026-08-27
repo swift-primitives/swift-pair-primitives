@@ -15,36 +15,45 @@ let package = Package(
         .library(
             name: "Pair",
             targets: ["Pair"]
-        )
-    ],
-    dependencies: [
-        .package(
-            url: "https://github.com/swift-molecules/swift-equation.git",
-            branch: "main"
         ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-hash.git",
-            branch: "main"
+        .library(
+            name: "Pair Standard Library Integration",
+            targets: ["Pair Standard Library Integration"]
         ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-comparison.git",
-            branch: "main"
+        .library(
+            name: "Pair Apple Foundation Integration",
+            targets: ["Pair Apple Foundation Integration"]
         ),
     ],
+    dependencies: [],
     targets: [
         .target(
             name: "Pair",
+            dependencies: []
+        ),
+        .target(
+            name: "Pair Standard Library Integration",
+            dependencies: ["Pair"]
+        ),
+        .target(
+            name: "Pair Apple Foundation Integration",
             dependencies: [
-                .product(name: "Equation", package: "swift-equation"),
-                .product(name: "Hash", package: "swift-hash"),
-                .product(name: "Comparison", package: "swift-comparison"),
+                "Pair",
+                "Pair Standard Library Integration",
             ]
         ),
         .testTarget(
             name: "Pair Tests",
+            dependencies: ["Pair"],
+            path: "Tests/Pair Tests"
+        ),
+        .testTarget(
+            name: "Pair Standard Library Integration Tests",
             dependencies: [
-                "Pair"
-            ]
+                "Pair",
+                "Pair Standard Library Integration",
+            ],
+            path: "Tests/Pair Standard Library Integration Tests"
         ),
     ],
     swiftLanguageModes: [.v6]
