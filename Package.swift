@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-pair-primitives",
+    name: "swift-pair",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -13,37 +13,37 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Pair Primitives",
-            targets: ["Pair Primitives"]
+            name: "Pair",
+            targets: ["Pair"]
         )
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-equation-primitives.git",
+            url: "https://github.com/swift-atoms/swift-equation.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-hash-primitives.git",
+            url: "https://github.com/swift-atoms/swift-hash.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-comparison-primitives.git",
+            url: "https://github.com/swift-atoms/swift-comparison.git",
             branch: "main"
         ),
     ],
     targets: [
         .target(
-            name: "Pair Primitives",
+            name: "Pair",
             dependencies: [
-                .product(name: "Equation Primitives", package: "swift-equation-primitives"),
-                .product(name: "Hash Primitives", package: "swift-hash-primitives"),
-                .product(name: "Comparison Primitives", package: "swift-comparison-primitives"),
+                .product(name: "Equation Protocol", package: "swift-equation"),
+                .product(name: "Hash Protocol", package: "swift-hash"),
+                .product(name: "Comparison Protocol", package: "swift-comparison"),
             ]
         ),
         .testTarget(
-            name: "Pair Primitives Tests",
+            name: "Pair Tests",
             dependencies: [
-                "Pair Primitives"
+                .target(name: "Pair")
             ]
         ),
     ],

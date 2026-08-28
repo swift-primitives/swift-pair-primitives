@@ -1,7 +1,7 @@
-extension Pair: Comparison.`Protocol`
+extension Pair: Comparison::Comparison.`Protocol`
 where
-    First: Comparison.`Protocol` & ~Copyable,
-    Second: Comparison.`Protocol` & ~Copyable
+    First: Comparison::Comparison.`Protocol` & ~Copyable,
+    Second: Comparison::Comparison.`Protocol` & ~Copyable
 {
 
     @inlinable

@@ -1,6 +1,6 @@
-@_exported public import Comparison_Primitives
-@_exported public import Equation_Primitives
-@_exported public import Hash_Primitives
+@_exported public import Comparison_Protocol
+@_exported public import Equation_Protocol
+@_exported public import Hash_Protocol
 
 @frozen
 public struct Pair<First: ~Copyable & ~Escapable, Second: ~Copyable & ~Escapable>: ~Copyable,

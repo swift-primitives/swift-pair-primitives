@@ -1,4 +1,4 @@
-import Pair_Primitives
+import Pair
 import Testing
 
 struct Token: ~Copyable, Sendable {
@@ -9,19 +9,19 @@ struct Ranked: ~Copyable, Sendable {
     let value: Int
 }
 
-extension Ranked: Equation.`Protocol` {
+extension Ranked: Equation::Equation.`Protocol` {
     static func == (lhs: borrowing Self, rhs: borrowing Self) -> Bool {
         lhs.value == rhs.value
     }
 }
 
-extension Ranked: Hash.`Protocol` {
+extension Ranked: Hash::Hash.`Protocol` {
     borrowing func hash(into hasher: inout Hasher) {
         hasher.combine(value)
     }
 }
 
-extension Ranked: Comparison.`Protocol` {
+extension Ranked: Comparison::Comparison.`Protocol` {
     static func < (lhs: borrowing Self, rhs: borrowing Self) -> Bool {
         lhs.value < rhs.value
     }
@@ -33,19 +33,19 @@ struct Span: ~Copyable, ~Escapable {
     init(value: Int) { self.value = value }
 }
 
-extension Span: Equation.`Protocol` {
+extension Span: Equation::Equation.`Protocol` {
     static func == (lhs: borrowing Self, rhs: borrowing Self) -> Bool {
         lhs.value == rhs.value
     }
 }
 
-extension Span: Hash.`Protocol` {
+extension Span: Hash::Hash.`Protocol` {
     borrowing func hash(into hasher: inout Hasher) {
         hasher.combine(value)
     }
 }
 
-extension Span: Comparison.`Protocol` {
+extension Span: Comparison::Comparison.`Protocol` {
     static func < (lhs: borrowing Self, rhs: borrowing Self) -> Bool {
         lhs.value < rhs.value
     }

@@ -1,7 +1,7 @@
-extension Pair: Equation.`Protocol`
+extension Pair: Equation::Equation.`Protocol`
 where
-    First: Equation.`Protocol` & ~Copyable,
-    Second: Equation.`Protocol` & ~Copyable
+    First: Equation::Equation.`Protocol` & ~Copyable,
+    Second: Equation::Equation.`Protocol` & ~Copyable
 {
 
     @inlinable
