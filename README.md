@@ -6,7 +6,7 @@
 
 Conditionally `Sendable` / `Equatable` / `Hashable` / `Comparable` / `Codable` based on its components, with overloaded `map(first:)` / `map(second:)` / `map(first:second:)` plus `swapped` / `apply` for compositional transformation. `Comparable` is lexicographic over `(first, second)`. Tuple conversion is available for the `Copyable` tier.
 
-For `~Copyable` components, conformance flows through [`Equation.Protocol`](https://github.com/swift-molecules/swift-equation) / [`Hash.Protocol`](https://github.com/swift-molecules/swift-hash) / [`Comparison.Protocol`](https://github.com/swift-molecules/swift-comparison) — the `borrowing`-parameter forks that admit move-only conformers on Swift 6.3. On Swift 6.4 and later (where SE-0499 lands), each `*.Protocol` is a typealias to its stdlib counterpart, so the same conformances cover both the `~Copyable` and stdlib paths uniformly.
+For `~Copyable` components, conformance flows through [`Equation.Protocol`](https://github.com/swift-atoms/swift-equation) / [`Hash.Protocol`](https://github.com/swift-atoms/swift-hash) / [`Comparison.Protocol`](https://github.com/swift-atoms/swift-comparison) — the `borrowing`-parameter forks that admit move-only conformers on Swift 6.3. On Swift 6.4 and later (where SE-0499 lands), each `*.Protocol` is a typealias to its stdlib counterpart, so the same conformances cover both the `~Copyable` and stdlib paths uniformly.
 
 ---
 
@@ -64,7 +64,7 @@ let widened = labelled.map(
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-molecules/swift-pair.git", branch: "main")
+    .package(url: "https://github.com/swift-atoms/swift-pair.git", branch: "main")
 ]
 ```
 
@@ -83,16 +83,16 @@ Requires Swift 6.3.1 and macOS 26 / iOS 26 / tvOS 26 / watchOS 26 / visionOS 26 
 
 ## Architecture
 
-One library product. Three sibling-primitive dependencies for `~Copyable`-aware equality / hashing / ordering.
+One library product with three layered dependencies for `~Copyable`-aware equality, hashing, and ordering.
 
 | Product | Target | Contents |
 |---------|--------|----------|
 | `Pair` | `Sources/Pair/` | `Pair<First, Second>` (conditionally `~Copyable`) + overloaded `map(first:)` / `map(second:)` / `map(first:second:)` + `swapped` + `apply` + tuple conversion. Conditionally `Equatable` / `Hashable` / `Comparable` / `Codable` (stdlib) and `Equation.Protocol` / `Hash.Protocol` / `Comparison.Protocol` (forks for ~Copyable on Swift 6.3). |
 
 Dependencies (re-exported via `@_exported public import` so consumers don't need to add them):
-- [`swift-equation`](https://github.com/swift-molecules/swift-equation)
-- [`swift-hash`](https://github.com/swift-molecules/swift-hash)
-- [`swift-comparison`](https://github.com/swift-molecules/swift-comparison)
+- [`swift-equation`](https://github.com/swift-atoms/swift-equation)
+- [`swift-hash`](https://github.com/swift-atoms/swift-hash)
+- [`swift-comparison`](https://github.com/swift-atoms/swift-comparison)
 
 Foundation-free.
 

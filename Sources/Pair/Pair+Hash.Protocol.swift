@@ -1,7 +1,7 @@
 extension Pair: Swift.Hashable
 where
-    First: Hash.`Protocol` & ~Copyable,
-    Second: Hash.`Protocol` & ~Copyable
+    First: Hash::Hash.`Protocol` & ~Copyable,
+    Second: Hash::Hash.`Protocol` & ~Copyable
 {
 
     @inlinable
@@ -12,8 +12,8 @@ where
     }
 }
 
-extension Pair: Hash.`Protocol`
+extension Pair: Hash::Hash.`Protocol`
 where
-    First: Hash.`Protocol` & ~Copyable,
-    Second: Hash.`Protocol` & ~Copyable
+    First: Hash::Hash.`Protocol` & ~Copyable,
+    Second: Hash::Hash.`Protocol` & ~Copyable
 {}
