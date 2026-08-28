@@ -43,7 +43,11 @@ let package = Package(
         .testTarget(
             name: "Pair Tests",
             dependencies: [
-                .target(name: "Pair")
+                .target(name: "Pair"),
+                .product(
+                    name: "Hash Standard Library Integration",
+                    package: "swift-hash"
+                ),
             ]
         ),
     ],
