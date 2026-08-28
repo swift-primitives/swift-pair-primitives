@@ -5,10 +5,50 @@ struct Token: ~Copyable, Sendable {
     let value: Int
 }
 
+struct Ranked: ~Copyable, Sendable {
+    let value: Int
+}
+
+extension Ranked: Equation.`Protocol` {
+    static func == (lhs: borrowing Self, rhs: borrowing Self) -> Bool {
+        lhs.value == rhs.value
+    }
+}
+
+extension Ranked: Hash.`Protocol` {
+    borrowing func hash(into hasher: inout Hasher) {
+        hasher.combine(value)
+    }
+}
+
+extension Ranked: Comparison.`Protocol` {
+    static func < (lhs: borrowing Self, rhs: borrowing Self) -> Bool {
+        lhs.value < rhs.value
+    }
+}
+
 struct Span: ~Copyable, ~Escapable {
     let value: Int
     @_lifetime(immortal)
     init(value: Int) { self.value = value }
+}
+
+extension Span: Equation.`Protocol` {
+    static func == (lhs: borrowing Self, rhs: borrowing Self) -> Bool {
+        lhs.value == rhs.value
+    }
+}
+
+extension Span: Hash.`Protocol` {
+    borrowing func hash(into hasher: inout Hasher) {
+        hasher.combine(value)
+    }
+}
+
+extension Span: Comparison.`Protocol` {
+    static func < (lhs: borrowing Self, rhs: borrowing Self) -> Bool {
+        lhs.value < rhs.value
+    }
 }
 
 @Suite
@@ -149,6 +189,103 @@ extension `Pair Tests`.Unit {
         let tuple = pair.tuple
         #expect(tuple.0 == 3)
         #expect(tuple.1 == 4)
+    }
+}
+
+extension `Pair Tests`.Unit {
+
+    @Test
+    func `equatable conformance`() {
+        let a = Pair(1, 2)
+        let b = Pair(1, 2)
+        let c = Pair(1, 3)
+        #expect(a == b)
+        #expect(a != c)
+    }
+
+    @Test
+    func `hashable conformance`() {
+        let a = Pair(1, 2)
+        let b = Pair(1, 2)
+        #expect(a.hashValue == b.hashValue)
+    }
+}
+
+extension `Pair Tests`.Unit {
+
+    @Test
+    func `comparable lexicographic less than first`() {
+        let a = Pair(1, 100)
+        let b = Pair(2, 0)
+        #expect(a < b)
+    }
+
+    @Test
+    func `comparable lexicographic tie break on second`() {
+        let a = Pair(1, 5)
+        let b = Pair(1, 7)
+        #expect(a < b)
+    }
+
+    @Test
+    func `comparable equal pairs are not less`() {
+        let a = Pair(3, 4)
+        let b = Pair(3, 4)
+        #expect(!(a < b))
+        #expect(!(b < a))
+    }
+
+    @Test
+    func `comparable greater than via reverse`() {
+        let a = Pair(2, 0)
+        let b = Pair(1, 100)
+        #expect(a > b)
+    }
+}
+
+extension `Pair Tests`.Unit {
+
+    @Test
+    func `equation protocol noncopyable pair equality`() {
+        let a = Pair(Ranked(value: 1), Ranked(value: 2))
+        let b = Pair(Ranked(value: 1), Ranked(value: 2))
+        let result: Bool = a == b
+        #expect(result)
+    }
+
+    @Test
+    func `equation protocol noncopyable pair inequality`() {
+        let a = Pair(Ranked(value: 1), Ranked(value: 2))
+        let c = Pair(Ranked(value: 1), Ranked(value: 3))
+        let result: Bool = a != c
+        #expect(result)
+    }
+
+    @Test
+    func `hash protocol noncopyable pair hashes`() {
+        let a = Pair(Ranked(value: 7), Ranked(value: 8))
+        let b = Pair(Ranked(value: 7), Ranked(value: 8))
+        var ha = Hasher()
+        var hb = Hasher()
+        a.hash(into: &ha)
+        b.hash(into: &hb)
+        #expect(ha.finalize() == hb.finalize())
+    }
+
+    @Test
+    func `comparison protocol noncopyable pair lexicographic`() {
+        let a = Pair(Ranked(value: 1), Ranked(value: 100))
+        let b = Pair(Ranked(value: 2), Ranked(value: 0))
+        let result: Bool = a < b
+        #expect(result)
+    }
+
+    @Test
+    func `comparison protocol noncopyable pair tie break`() {
+        let a = Pair(Ranked(value: 1), Ranked(value: 5))
+        let b = Pair(Ranked(value: 1), Ranked(value: 7))
+        let result: Bool = a < b
+        #expect(result)
     }
 }
 
